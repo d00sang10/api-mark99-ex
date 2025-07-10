@@ -16,3 +16,4 @@ export const RESPONSE_NOT_FOUND_CLIE = 'El cliente no existe';
 export const RESPONSE_NOT_FOUND_PRODUC = 'El producto no existe';
 
 export const REPONSE_CREDENTIALS_ERROR = 'Credenciales incorrectas';
+

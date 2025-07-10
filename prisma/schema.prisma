@@ -1,0 +1,103 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+
+model cliente { /* 📌 */
+  /* 🔑 PK */ id_cliente          Int       @id @default(autoincrement())
+
+  nombre              String    @db.VarChar(100)
+  email               String?   @unique @db.VarChar(100)
+  telefono            String?   @db.VarChar(15)
+
+  estado_auditoria    String?   @default("1") @db.Char(1) /* 🔘 */
+  fecha_creacion      DateTime? @default(now()) @db.Timestamp(6) /* 🔘 */
+  fecha_actualizacion DateTime? @db.Timestamp(6) /* 🔘 */
+  venta               venta[]
+}
+
+model proveedor { /* 📌 */
+  /* 🔑 PK */ id_proveedor        Int        @id @default(autoincrement())
+
+  nombre              String     @db.VarChar(100)
+  contacto            String?    @db.VarChar(50)
+  telefono            String?    @db.VarChar(20)
+  email               String?    @db.VarChar(100)
+
+  estado_auditoria    String?    @default("1") @db.Char(1) /* 🔘 */
+  fecha_creacion      DateTime?  @default(now()) @db.Timestamp(6) /* 🔘 */
+  fecha_actualizacion DateTime?  @db.Timestamp(6) /* 🔘 */
+
+  producto            producto[]
+}
+
+model producto { /* 📌 */
+  /* 🔑 PK */ id_producto Int @id @default(autoincrement())
+
+  nombre       String  @db.VarChar(100)
+  descripcion  String?
+  precio       Decimal @db.Decimal(10, 2)
+  
+  /* 🟥 FK */ id_proveedor Int? 
+
+  estado_auditoria    String?   @default("1") @db.Char(1) /* 🔘 */
+  fecha_creacion      DateTime? @default(now()) @db.Timestamp(6) /* 🔘 */
+  fecha_actualizacion DateTime? @db.Timestamp(6) /* 🔘 */ 
+
+  proveedor     proveedor?      @relation(fields: [id_proveedor], references: [id_proveedor], onDelete: SetNull, map: "fk_producto_proveedor")
+  inventario    inventario?
+  detalle_venta detalle_venta[]
+}
+
+model inventario { /* 📌 */
+  /* 🟥 FK */ id_producto         Int       @id
+
+  stock               Int
+  estado_auditoria    String?   @default("1") @db.Char(1) /* 🔘 */
+  fecha_creacion      DateTime? @default(now()) @db.Timestamp(6) /* 🔘 */
+  fecha_actualizacion DateTime? @db.Timestamp(6)/* 🔘 */
+
+  producto            producto  @relation(fields: [id_producto], references: [id_producto], onDelete: Cascade, map: "fk_inventario_producto")
+}
+
+model venta { /* 📌 */
+  /* 🔑 PK */ id_venta            Int             @id @default(autoincrement())
+
+  /* 🟥 FK */ id_cliente          Int?
+  total               Decimal?        @db.Decimal(10, 2)
+
+  estado_auditoria    String?         @default("1") @db.Char(1) /* 🔘 */
+  fecha_creacion      DateTime?       @default(now()) @db.Timestamp(6) /* 🔘 */
+  fecha_actualizacion DateTime?       @db.Timestamp(6) /* 🔘 */
+
+  cliente             cliente?        @relation(fields: [id_cliente], references: [id_cliente], onDelete: SetNull, map: "fk_venta_cliente")
+  detalle_venta       detalle_venta[]
+}
+
+model detalle_venta { /* 📌 */
+  /* 🔑 PK */ id_detalle          Int       @id @default(autoincrement())
+
+  /* 🟥 FK */ id_venta            Int
+  /* 🟥 FK */ id_producto         Int
+  cantidad            Int
+  subtotal            Decimal   @db.Decimal(10, 2)
+
+  estado_auditoria    String?   @default("1") @db.Char(1) /* 🔘 */
+  fecha_creacion      DateTime? @default(now()) @db.Timestamp(6) /* 🔘 */
+  fecha_actualizacion DateTime? @db.Timestamp(6) /* 🔘 */
+
+  venta               venta     @relation(fields: [id_venta], references: [id_venta], onDelete: Cascade, map: "fk_detalle_venta")
+  producto            producto  @relation(fields: [id_producto], references: [id_producto], onDelete: Cascade, map: "fk_detalle_producto")
+}
+
+model User {
+  id       Int    @id @default(autoincrement())
+  username String @unique
+  password String
+  role     String @default("user")
+}

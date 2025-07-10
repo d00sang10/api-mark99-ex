@@ -98,7 +98,7 @@ const route = express.Router();
 
 /**
  * @swagger
- * /clientes:
+ * /api/v1/clientes:
  *   get:
  *     summary: Obtener todos los clientes
  *     tags: [Clientes]
@@ -116,7 +116,7 @@ route.get('/', authMiddleware, listarClientes);
 
 /**
  * @swagger
- * /clientes/{id}:
+ * /api/v1/clientes/{id}:
  *   get:
  *     summary: Obtener un cliente por ID
  *     tags: [Clientes]
@@ -142,7 +142,7 @@ route.get('/:id', buscarClientePorId);
 
 /**
  * @swagger
- * /clientes:
+ * /api/v1/clientes:
  *   post:
  *     summary: Crear un nuevo cliente
  *     tags: [Clientes]
@@ -177,7 +177,7 @@ route.post('/', agregarClientes);
 
 /**
  * @swagger
- * /clientes/{id}:
+ * /api/v1/clientes/{id}:
  *   put:
  *     summary: Modificar un cliente existente
  *     tags: [Clientes]
@@ -218,7 +218,7 @@ route.put('/:id', modificarCliente);
 
 /**
  * @swagger
- * /clientes/{id}:
+ * /api/v1/clientes/{id}:
  *   delete:
  *     summary: Eliminar un cliente
  *     tags: [Clientes]

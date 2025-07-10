@@ -25,7 +25,6 @@ app.use(express.json());
 app.use(cors());
 app.use(morgan('dev'));
 // sd
-// falsesdfsdf
 
 app.use(`${config.API_PREFIX}/clientes`, clienteRoutes);
 app.use(`${config.API_PREFIX}/proveedores`, proveedorRoutes);

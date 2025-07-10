@@ -24,7 +24,9 @@ const app: Application = express();
 app.use(express.json());
 app.use(cors());
 app.use(morgan('dev'));
+
 // sd
+// testtsetests
 
 app.use(`${config.API_PREFIX}/clientes`, clienteRoutes);
 app.use(`${config.API_PREFIX}/proveedores`, proveedorRoutes);
@@ -53,4 +55,5 @@ export default app;
 //uyuyuwyuwyquwyqwqwy
 
 
+// TEST DE AHORA 23:27
 // TEST DE AHORA 23:27

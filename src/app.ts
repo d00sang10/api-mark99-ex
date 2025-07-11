@@ -12,10 +12,6 @@ import detalleVentaRoute from './routes/detalleVentaRoute';
 
 import authRouter from './routes/authRouter';
 
-// import swaggerJSDoc from 'swagger-jsdoc';
-// import swaggerUi from 'swagger-ui-express';
-// import spec from './config/swagger';
-
 import swaggerUi from 'swagger-ui-express';
 import { swaggerSpec } from './docs/swagger';
 
@@ -25,8 +21,6 @@ app.use(express.json());
 app.use(cors());
 app.use(morgan('dev'));
 
-// sd
-// testtsetests
 
 app.use(`${config.API_PREFIX}/clientes`, clienteRoutes);
 app.use(`${config.API_PREFIX}/proveedores`, proveedorRoutes);
@@ -39,21 +33,3 @@ app.use(`${config.API_PREFIX}/auth`, authRouter);
 app.use(`${config.API_PREFIX}/api-docs`, swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
 export default app;
-
-
-
-
-// app.use(`${process.env.API_PREFIX}/clientes`, clienteRoutes);
-// app.use(`${process.env.API_PREFIX}/proveedores`, proveedorRoutes);
-// app.use(`${process.env.API_PREFIX}/productos`, productoRoutes);
-// app.use(`${process.env.API_PREFIX}/inventarios`, inventarioRoute);
-// app.use(`${process.env.API_PREFIX}/ventas`, ventaRoute);
-// app.use(`${process.env.API_PREFIX}/detalles`, detalleVentaRoute);
-
-
-//mensaje de prueba
-//uyuyuwyuwyquwyqwqwy
-
-
-// TEST DE AHORA 23:27
-// TEST DE AHORA 23:27

@@ -1,7 +1,7 @@
 import morgan from 'morgan';
 import express, { Application } from 'express';
 import cors from 'cors';
-    import config from './config/env';
+import config from './config/env';
 
 import clienteRoutes from './routes/clienteRoute';
 import proveedorRoutes from './routes/proveedorRoute';

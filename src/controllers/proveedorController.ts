@@ -1,4 +1,3 @@
-
 import { STATUS_BAD_REQUEST, STATUS_INTERNAL_SERVER_ERROR } from "../shared/constants";
 import { ResponseModel } from "../shared/responseModel";
 import { Request, Response } from "express";
@@ -29,6 +28,7 @@ export const buscarProveedorPorId = async (req: Request, res: Response): Promise
         res.status(STATUS_INTERNAL_SERVER_ERROR).json(ResponseModel.error(error.message));
     }
 };
+
 export const agregarProveedor = async (req: Request, res: Response): Promise<any> => {
     console.log("proveedorController: agregarProveedor");
     const { error }: any = proveedorCrearSchema.validate(req.body);
@@ -44,7 +44,6 @@ export const agregarProveedor = async (req: Request, res: Response): Promise<any
         res.status(STATUS_INTERNAL_SERVER_ERROR).json(ResponseModel.error(error.message));
     }
 };
-
 
 export const modificarProveedor = async (req: Request, res: Response): Promise<any> => {
     console.log("proveedorController: modificarProveedor");

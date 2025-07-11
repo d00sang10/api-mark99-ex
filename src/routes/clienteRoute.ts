@@ -98,10 +98,12 @@ const route = express.Router();
 
 /**
  * @swagger
- * /api/v1/clientes:
+ *  /api/v1/clientes:
  *   get:
  *     summary: Obtener todos los clientes
  *     tags: [Clientes]
+ *     security:
+ *       - bearerAuth: []
  *     responses:
  *       200:
  *         description: Lista de clientes
@@ -120,6 +122,8 @@ route.get('/', authMiddleware, listarClientes);
  *   get:
  *     summary: Obtener un cliente por ID
  *     tags: [Clientes]
+ *     security:
+ *       - bearerAuth: []
  *     parameters:
  *       - in: path
  *         name: id
@@ -138,7 +142,7 @@ route.get('/', authMiddleware, listarClientes);
  *         description: Cliente no encontrado
  */
 
-route.get('/:id', authMiddleware,buscarClientePorId);
+route.get('/:id',authMiddleware, buscarClientePorId);
 
 /**
  * @swagger
@@ -146,6 +150,8 @@ route.get('/:id', authMiddleware,buscarClientePorId);
  *   post:
  *     summary: Crear un nuevo cliente
  *     tags: [Clientes]
+ *     security:
+ *       - bearerAuth: []
  *     requestBody:
  *       required: true
  *       content:
@@ -173,7 +179,7 @@ route.get('/:id', authMiddleware,buscarClientePorId);
  *               $ref: '#/components/schemas/Cliente'
  */
 
-route.post('/', authMiddleware,agregarClientes);
+route.post('/',authMiddleware, agregarClientes);
 
 /**
  * @swagger
@@ -181,6 +187,8 @@ route.post('/', authMiddleware,agregarClientes);
  *   put:
  *     summary: Modificar un cliente existente
  *     tags: [Clientes]
+ *     security:
+ *       - bearerAuth: []
  *     parameters:
  *       - in: path
  *         name: id
@@ -198,9 +206,6 @@ route.post('/', authMiddleware,agregarClientes);
  *               nombre:
  *                 type: string
  *                 example: Luis Gómez
- *               email:
- *                 type: string
- *                 example: luisg@hotmail.com
  *               telefono:
  *                 type: string
  *                 example: '955112233'
@@ -214,7 +219,7 @@ route.post('/', authMiddleware,agregarClientes);
  *       404:
  *         description: Cliente no encontrado
  */
-route.put('/:id', authMiddleware,modificarCliente);
+route.put('/:id',authMiddleware, modificarCliente);
 
 /**
  * @swagger
@@ -222,6 +227,8 @@ route.put('/:id', authMiddleware,modificarCliente);
  *   delete:
  *     summary: Eliminar un cliente
  *     tags: [Clientes]
+ *     security:
+ *       - bearerAuth: []
  *     parameters:
  *       - in: path
  *         name: id

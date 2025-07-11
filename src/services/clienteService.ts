@@ -41,14 +41,20 @@ export const buscarClientePorId = async (id: number) => {
 
 
 export const agregarClientes = async (cliente: Cliente) => {
+
   console.log("services/cliente.service.ts: agregarClientes");
+
   await prisma.cliente.create({
     data: toPrismaCliente(cliente)
   });
+
   return RESPONSE_INSERT_OK;
 };
+
 export const modificarCliente = async (id: number, cliente: Cliente) => {
+
   console.log("services/cliente.service.ts: modificarCliente");
+
   const dataActualizada = { ...cliente, fechaActualizacion: new Date() }
   const clienteExistente = await prisma.cliente.findUnique({
     where: {

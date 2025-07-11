@@ -24,8 +24,7 @@ export const buscarInventarioPorId = async(id: number) => {
     console.log("inventarioService:: buscarInventarioPorId");
     const inventario: inventario | null = await prisma.inventario.findUnique({
         where: {
-            id_producto: id,
-            estado_auditoria: '1'
+            id_producto: id
         }
     });
     if (!inventario || inventario.estado_auditoria !== '1') {
@@ -38,10 +37,12 @@ export const buscarInventarioPorId = async(id: number) => {
 export const agregarInventario = async (inventario: Inventario) => {
     console.log("inventarioService:: agregarInventario");
     const producto = await prisma.producto.findUnique({
-        where: { id_producto: inventario.idProducto }
+        where: { 
+            id_producto: inventario.idProducto 
+        }
     });
-    if (!producto || producto.estado_auditoria !== '1') {
-        return (RESPONSE_NOT_FOUND_PRODUC);
+    if (!producto || producto.estado_auditoria !=='1') {
+        return RESPONSE_NOT_FOUND_PRODUC;
     }
     await prisma.inventario.create({
         data: toPrismaInventario(inventario)
@@ -50,7 +51,7 @@ export const agregarInventario = async (inventario: Inventario) => {
 };
 
 
-export const modificarInventario = async (id: number, inventario: any) => {
+export const modificarInventario = async (id: number, inventario: Inventario) => {
     console.log("inventarioService:: modificarInventario");
     const dataActualizada = {...inventario,fechaActualizacion: new Date()}
     const inventarioExistente = await prisma.inventario.findUnique({

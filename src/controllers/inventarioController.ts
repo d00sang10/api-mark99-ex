@@ -5,7 +5,6 @@ import { ResponseModel } from "../shared/responseModel";
 import { inventarioCrearSchema } from "../schemas/inventarioSchema";
 export const listarInventarios = async (req: Request, res: Response) :Promise<any>=> {
     console.log("inventarioController: listarInventarios");
-
     try {
         const   response = await inventarioService.listarInventarios();
         res.json(ResponseModel.success(response));
@@ -47,7 +46,6 @@ export const agregarInventario = async (req: Request, res: Response) :Promise<an
 
 export const modificarInventario = async (req: Request, res: Response) :Promise<any>=> {
     console.log("inventarioController: modificarInventario");
-
     try {
         const { id } = req.params;
         const response = await inventarioService.modificarInventario(Number(id), req.body);

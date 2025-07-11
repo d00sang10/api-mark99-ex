@@ -1,42 +1,17 @@
-// import Joi from 'joi';
-
-// //TELEFONO NUMBER
-// export const proveedorCrearSchema = Joi.object({
-//   nombre: Joi.string().max(100).required().messages({
-//     "string.base": "El campo 'nombre' debe ser un texto.",
-//     "string.empty": "El campo 'nombre' no puede estar vacío.",
-//     "string.max": "El campo 'nombre' debe tener como máximo 100 caracteres.",
-//     "any.required": "El campo 'nombre' es obligatorio."
-//   }),
-//   email: Joi.string().email().required().messages({
-//     "string.base": "El campo 'email' debe ser un texto.",
-//     "string.empty": "El campo 'email' no puede estar vacío.",
-//     "string.email": "El campo 'email' debe tener un formato válido.",
-//     "any.required": "El campo 'email' es obligatorio."
-//   }),
-//   telefono: Joi.string().pattern(/^\d{9}$/).required().messages({
-//     "string.base": "El campo 'teléfono' debe ser un texto numérico.",
-//     "string.pattern.base": "El campo 'teléfono' debe tener exactamente 9 dígitos.",
-//     "string.empty": "El campo 'teléfono' no puede estar vacío.",
-//     "any.required": "El 'campo' es obligatorio."
-//   })
-// })
-
 import Joi from "joi"
 
 export const proveedorCrearSchema = Joi.object({
 
     nombre: Joi
         .string()
-        .trim() 
-        .min(5) 
+        .trim()
+        .min(3)
         .max(20)
         .required()
         .messages({
             "string.base": "El campo 'nombre' debe ser un texto.",
             "string.empty": "El campo 'nombre' no puede estar vacío.",
-            "string.min": "En el campo 'nombre' al menos 5 caracteres",
-            // "string.min": "El campo 'nombre' no puede estar vacío o solo contener espacios.",
+            "string.min": "En el campo 'nombre' al menos 3 caracteres",
             "string.max": "El campo 'nombre' debe tener como máximo 20 caracteres.",
             "any.required": "El campo 'nombre' es obligatorio."
         }),
@@ -44,23 +19,23 @@ export const proveedorCrearSchema = Joi.object({
 
     contacto: Joi
         .string()
-        .trim() 
-        .min(5) 
+        .trim()
+        .min(5)
         .max(20)
         .messages({
-            "string.base": "El campo 'nombre' debe ser un texto.",
-            "string.empty": "El campo 'nombre' no puede estar vacío.",
-            "string.min": "En el campo 'nombre' al menos 5 caracteres",
-            // "string.min": "El campo 'nombre' no puede estar vacío o solo contener espacios.",
-            "string.max": "El campo 'nombre' debe tener como máximo 20 caracteres.",
-            "any.required": "El campo 'nombre' es obligatorio."
+            "string.base": "El campo 'contacto' debe ser un texto.",
+            "string.empty": "El campo 'contacto' no puede estar vacío.",
+            "string.min": "En el campo 'contacto' al menos 5 caracteres",
+            "string.max": "El campo 'contacto' debe tener como máximo 20 caracteres.",
+            "any.required": "El campo 'contacto' es obligatorio."
         }),
 
     telefono: Joi
         .string()
         .trim()
         .min(9)
-        .pattern(/^\d{7,15}$/) 
+        .required()
+        .pattern(/^\d{7,15}$/)
         .messages({
             "string.base": "El campo 'teléfono' debe ser un texto.",
             "string.empty": "El campo 'teléfono' no puede estar vacío.",
@@ -73,6 +48,7 @@ export const proveedorCrearSchema = Joi.object({
         .trim()
         .email()
         .min(1)
+        .required()
         .messages({
             "string.base": "El campo 'email' debe ser un texto.",
             "string.email": "El campo 'email' debe tener un formato válido.",

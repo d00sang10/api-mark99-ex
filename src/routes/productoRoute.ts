@@ -7,12 +7,13 @@ import {
     modificarProducto, 
     eliminarProducto 
 } from '../controllers/productoController';
+import { authMiddleware } from '../auth/auth.middleware';
 const route = express.Router();
 
-route.get('/',listarProductos);
-route.get('/:id',buscarProductoPorId);
-route.post('/',agregarProducto);
-route.put('/:id',modificarProducto);
-route.delete('/:id',eliminarProducto);
+route.get('/',authMiddleware,listarProductos);
+route.get('/:id',authMiddleware,buscarProductoPorId);
+route.post('/',authMiddleware,agregarProducto);
+route.put('/:id',authMiddleware,modificarProducto);
+route.delete('/:id',authMiddleware,eliminarProducto);
 
 export default route;

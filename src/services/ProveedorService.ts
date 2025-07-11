@@ -23,8 +23,7 @@ export const buscarProveedorPorId = async (id: number) => {
     console.log("proveedorService:: buscarProveedorPorId");
     const proveedor: proveedor | null = await prisma.proveedor.findUnique({
         where: {
-            id_proveedor: id,
-            estado_auditoria: '1'
+            id_proveedor: id
         }
     });
     if (!proveedor || proveedor.estado_auditoria !== '1') {
@@ -79,7 +78,8 @@ export const eliminarProveedor = async (id: number) => {
             id_proveedor: id
         },
         data: {
-            estado_auditoria: '0'
+            estado_auditoria: '0',
+            fecha_actualizacion: new Date()
         }
     });
     return RESPONSE_DELETE_OK;

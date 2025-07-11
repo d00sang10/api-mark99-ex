@@ -4,7 +4,7 @@ import { Request, Response } from 'express';
 import * as detalleVentaService from '../services/detalleVentaService';
 import { detalleVentaCrearSchema } from '../schemas/detalleVentaSchema';
 
-export const listarDetalles = async (req: Request, res: Response) :Promise<any>=> {
+export const listarDetalles = async (req: Request, res: Response): Promise<any> => {
     console.log("detalleVentaController:: listarDetalles");
     try {
         const response = await detalleVentaService.listarDetalles();
@@ -15,7 +15,7 @@ export const listarDetalles = async (req: Request, res: Response) :Promise<any>=
     }
 }
 
-export const buscarDetallePorId = async (req: Request, res: Response) :Promise<any>=> {
+export const buscarDetallePorId = async (req: Request, res: Response): Promise<any> => {
     console.log("detalleVentaController:: buscarDetallePorId");
     try {
         const { id } = req.params;
@@ -26,12 +26,16 @@ export const buscarDetallePorId = async (req: Request, res: Response) :Promise<a
         res.status(STATUS_INTERNAL_SERVER_ERROR).json(ResponseModel.error(error.message));
     }
 }
-export const agregarDetalle = async (req: Request, res: Response) :Promise<any>=> {
+export const agregarDetalle = async (req: Request, res: Response): Promise<any> => {
+
     console.log("detalleVentaController:: agregarDetalle");
+
     const { error }: any = detalleVentaCrearSchema.validate(req.body);
-        if (error) {
-            return res.status(STATUS_BAD_REQUEST).json(ResponseModel.error(error.message, STATUS_BAD_REQUEST));
-        }
+    
+    if (error) {
+        return res.status(STATUS_BAD_REQUEST).json(ResponseModel.error(error.message, STATUS_BAD_REQUEST));
+    }
+
     try {
         const response = await detalleVentaService.agregarDetalle(req.body);
         res.json(ResponseModel.success(response));
@@ -41,7 +45,7 @@ export const agregarDetalle = async (req: Request, res: Response) :Promise<any>=
     }
 }
 
-export const eliminarDetalle = async (req: Request, res: Response) :Promise<any>=> {
+export const eliminarDetalle = async (req: Request, res: Response): Promise<any> => {
     console.log("detalleVentaController:: eliminarDetalle");
     try {
         const { id } = req.params;

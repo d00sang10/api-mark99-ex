@@ -2,11 +2,11 @@ import { STATUS_BAD_REQUEST, STATUS_INTERNAL_SERVER_ERROR } from "../shared/cons
 import { Request, Response } from "express";
 import * as inventarioService from "../services/inventarioService";
 import { ResponseModel } from "../shared/responseModel";
-import { inventarioCrearSchema } from "../schemas/inventarioSchema";
-export const listarInventarios = async (req: Request, res: Response) :Promise<any>=> {
+import { inventarioActualizarSchema, inventarioCrearSchema } from "../schemas/inventarioSchema";
+export const listarInventarios = async (req: Request, res: Response): Promise<any> => {
     console.log("inventarioController: listarInventarios");
     try {
-        const   response = await inventarioService.listarInventarios();
+        const response = await inventarioService.listarInventarios();
         res.json(ResponseModel.success(response));
     }
     catch (error: any) {
@@ -15,8 +15,10 @@ export const listarInventarios = async (req: Request, res: Response) :Promise<an
     }
 };
 
-export const buscarInventarioPorId = async (req: Request, res: Response) :Promise<any>=> {
+export const buscarInventarioPorId = async (req: Request, res: Response): Promise<any> => {
+
     console.log("inventarioController: buscarInventarioPorId");
+
     try {
         const { id } = req.params;
         const response = await inventarioService.buscarInventarioPorId(Number(id));
@@ -28,12 +30,16 @@ export const buscarInventarioPorId = async (req: Request, res: Response) :Promis
     }
 };
 
-export const agregarInventario = async (req: Request, res: Response) :Promise<any>=> {
+export const agregarInventario = async (req: Request, res: Response): Promise<any> => {
+
     console.log("inventarioController: agregarInventario");
+
     const { error }: any = inventarioCrearSchema.validate(req.body);
-        if (error) {
-            return res.status(STATUS_BAD_REQUEST).json(ResponseModel.error(error.message, STATUS_BAD_REQUEST));
-        }
+
+    if (error) {
+        return res.status(STATUS_BAD_REQUEST).json(ResponseModel.error(error.message, STATUS_BAD_REQUEST));
+    }
+
     try {
         const response = await inventarioService.agregarInventario(req.body);
         res.json(ResponseModel.success(response));
@@ -44,8 +50,16 @@ export const agregarInventario = async (req: Request, res: Response) :Promise<an
     }
 };
 
-export const modificarInventario = async (req: Request, res: Response) :Promise<any>=> {
+export const modificarInventario = async (req: Request, res: Response): Promise<any> => {
+
     console.log("inventarioController: modificarInventario");
+
+    const { error }: any = inventarioActualizarSchema.validate(req.body);
+
+    if (error) {
+        return res.status(STATUS_BAD_REQUEST).json(ResponseModel.error(error.message, STATUS_BAD_REQUEST));
+    }
+
     try {
         const { id } = req.params;
         const response = await inventarioService.modificarInventario(Number(id), req.body);

@@ -40,3 +40,38 @@ export const detalleVentaCrearSchema = Joi.object({
       "any.required": "El campo 'cantidad' es obligatorio."
     })
 });
+
+export const detalleVentaActualizarSchema = Joi.object({
+
+  idVenta: Joi
+    .number()
+    .integer()
+    .positive()
+    .allow(null)
+    .messages({
+      "number.base": "El campo 'id_venta' debe ser un número.",
+      "number.integer": "El campo 'id_venta' debe ser un número entero.",
+      "number.positive": "El campo 'id_venta' debe ser un número positivo.",
+    }),
+
+  idProducto: Joi
+    .number()
+    .integer()
+    .positive()
+    .allow(null)
+    .messages({
+      "number.base": "El campo 'id_producto' debe ser un número.",
+      "number.integer": "El campo 'id_producto' debe ser un número entero.",
+      "number.positive": "El campo 'id_producto' debe ser un número positivo.",
+    }),
+
+  cantidad: Joi
+    .number()
+    .positive()
+    .precision(2)
+    .messages({
+      "number.base": "El campo 'cantidad' debe ser un número.",
+      "number.positive": "El campo 'cantidad' debe ser un número positivo.",
+      "number.precision": "El campo 'cantidad' debe tener como máximo 2 decimales.",
+    })
+});

@@ -35,18 +35,23 @@ export const buscarInventarioPorId = async(id: number) => {
 
 
 export const agregarInventario = async (inventario: Inventario) => {
+
     console.log("inventarioService:: agregarInventario");
+
     const producto = await prisma.producto.findUnique({
         where: { 
             id_producto: inventario.idProducto 
         }
     });
+
     if (!producto || producto.estado_auditoria !=='1') {
         return RESPONSE_NOT_FOUND_PRODUC;
     }
+
     await prisma.inventario.create({
         data: toPrismaInventario(inventario)
     });
+    
     return RESPONSE_INSERT_OK;
 };
 

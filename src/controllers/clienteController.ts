@@ -33,15 +33,11 @@ export const buscarClientePorId = async (req: Request, res: Response): Promise<a
 };
 
 export const agregarClientes = async (req: Request, res: Response): Promise<any> => {
-
     console.log("controllers/cliente.controller.ts: agregarClientes");
-
     const { error }: any = clienteCrearSchema.validate(req.body);
-
     if (error) {
         return res.status(STATUS_BAD_REQUEST).json(ResponseModel.error(error.message, STATUS_BAD_REQUEST));
     }
-
     try {
         const response = await clienteService.agregarClientes(req.body);
         res.json(ResponseModel.success(response));
@@ -53,9 +49,7 @@ export const agregarClientes = async (req: Request, res: Response): Promise<any>
 }
 
 export const modificarCliente = async (req: Request, res: Response): Promise<any> => {
-
     console.log("controllers/cliente.controller.ts: modificarCliente");
-
     try {
         const { id } = req.params;
         const response = await clienteService.modificarCliente(Number(id), req.body);
@@ -69,9 +63,7 @@ export const modificarCliente = async (req: Request, res: Response): Promise<any
 };
 
 export const eliminarCliente = async (req: Request, res: Response): Promise<any> => {
-
     console.log("controllers/cliente.controller.ts: eliminarCliente");
-
     try {
         const { id } = req.params;
         const response = await clienteService.eliminarCliente(Number(id));

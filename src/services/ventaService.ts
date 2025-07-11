@@ -23,11 +23,10 @@ export const buscarVentaPorId = async (id: number) => {
     console.log("ventaService:: buscarVentaPorId");
     const ventas: venta | null = await prisma.venta.findUnique({
         where: {
-            id_venta: id,
-            estado_auditoria: '1'
+            id_venta: id
         }
     });
-    if (!ventas) {
+    if (!ventas|| ventas.estado_auditoria!=='1') {
         return (RESPONSE_NOT_FOUND);
     }
     return ventas ? fromPrismaVenta(ventas) : null;
@@ -55,11 +54,10 @@ export const agregarVenta = async (venta: Venta) => {
     console.log("ventaService:: agregarVenta");
     const clienteExistente = await prisma.cliente.findUnique({
         where: {
-            id_cliente: venta.idCliente,
-            estado_auditoria: '1'
+            id_cliente: venta.idCliente
         }
     });
-    if (!clienteExistente) {
+    if (!clienteExistente|| clienteExistente.estado_auditoria!=='1') {
         return RESPONSE_NOT_FOUND_CLIE;
     }
     const nuevaVenta = await prisma.venta.create({
@@ -80,10 +78,18 @@ export const modificarVenta = async (id: number, venta: Venta) => {
             id_venta: id
         }
     });
-
-    if (!ventaExistente || ventaExistente.estado_auditoria !== '1') {
+    if (!ventaExistente || ventaExistente.estado_auditoria !=='1') {
         return RESPONSE_NOT_FOUND;
     }
+    const clienteExistente = await prisma.cliente.findUnique({
+        where:{
+            id_cliente: venta.idCliente
+        }
+    });
+    if(!clienteExistente || clienteExistente.estado_auditoria !=='1'){
+        return RESPONSE_NOT_FOUND_CLIE;
+    }
+
     await prisma.venta.update({
         where: {
             id_venta: id
@@ -108,7 +114,8 @@ export const eliminarVenta = async (id: number) => {
             id_venta: id
         },
         data: {
-            estado_auditoria: '0'
+            estado_auditoria: '0',
+            fecha_actualizacion: new Date()
         }
     });
     return RESPONSE_DELETE_OK;

@@ -5,11 +5,12 @@ import {
     agregarInventario,
     modificarInventario
 } from '../controllers/inventarioController';
+import { authMiddleware } from '../auth/auth.middleware';
 const route = express.Router();
 
-route.get('/',listarInventarios);
-route.get('/:id',buscarInventarioPorId);
-route.post('/',agregarInventario);
-route.put('/:id',modificarInventario);
+route.get('/',authMiddleware,listarInventarios);
+route.get('/:id',authMiddleware,buscarInventarioPorId);
+route.post('/',authMiddleware,agregarInventario);
+route.put('/:id',authMiddleware,modificarInventario);
 
 export default route;

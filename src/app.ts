@@ -48,9 +48,3 @@ export default app;
 // app.use(`${process.env.API_PREFIX}/ventas`, ventaRoute);
 // app.use(`${process.env.API_PREFIX}/detalles`, detalleVentaRoute);
 
-
-//mensaje de prueba
-//uyuyuwyuwyquwyqwqwy
-//
-//segunda prueba push riofrio
-

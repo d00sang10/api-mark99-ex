@@ -24,7 +24,6 @@ export const buscarDetallePorId = async (id: number) => {
     const detalle: detalle_venta | null = await prisma.detalle_venta.findUnique({
         where: {
             id_detalle: id,
-            estado_auditoria: '1'
         }
     });
     if (!detalle || detalle.estado_auditoria !== '1') {
@@ -72,7 +71,6 @@ export const agregarDetalle = async (detalle: DetalleVenta) => {
     });
     // subtotal con el precio del producto
     detalle.subtotal = new Decimal(detalle.cantidad).mul(producto.precio);
-    //detalle.subtotal = Number(detalle.cantidad) * producto.precio.toNumber();
 
     // ACTULIZAR EL TOTAL DE LA VENTA SUMANDO LOS SUBTOTALES DE ID_VENTA
     await prisma.venta.update({
@@ -91,29 +89,6 @@ export const agregarDetalle = async (detalle: DetalleVenta) => {
     });
     return RESPONSE_INSERT_OK;
 };
-
-
-export const modificarDetalle = async (id: number, detalle: DetalleVenta) => {
-    console.log("detalleVentaService:: modificarDetalle");
-    const dataActualizada = { ...detalle, fechaActualizacion: new Date() }
-    const detalleExistente = await prisma.detalle_venta.findUnique({
-        where: {
-            id_detalle: id
-        }
-    });
-
-    if (!detalleExistente || detalleExistente.estado_auditoria !== '1') {
-        return RESPONSE_NOT_FOUND;
-    }
-
-    await prisma.detalle_venta.update({
-        where: {
-            id_detalle: id
-        },
-        data: toPrismaDetalleVenta(dataActualizada)
-    });
-    return RESPONSE_UPDATE_OK;
-}
 
 export const eliminarDetalle = async (id: number) => {
     console.log("detalleVentaService:: eliminarDetalle");

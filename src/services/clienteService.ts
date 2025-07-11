@@ -26,101 +26,59 @@ export const listarClientes = async () => {
 
 
 export const buscarClientePorId = async (id: number) => {
-
   console.log("services/cliente.service.ts: buscarClientePorId");
-
   const cliente: cliente | null = await prisma.cliente.findUnique({
 
     where: {
-      id_cliente: id,
-      estado_auditoria: '1'
-
+      id_cliente: id
     }
   });
-
   if (!cliente || cliente.estado_auditoria !== '1') {
     return (RESPONSE_NOT_FOUND);
   }
-
   return cliente ? fromPrismaCliente(cliente) : null;
 }
 
 
 export const agregarClientes = async (cliente: Cliente) => {
-
   console.log("services/cliente.service.ts: agregarClientes");
-
   await prisma.cliente.create({
     data: toPrismaCliente(cliente)
   });
-
   return RESPONSE_INSERT_OK;
 };
-
 export const modificarCliente = async (id: number, cliente: Cliente) => {
-
   console.log("services/cliente.service.ts: modificarCliente");
-
   const dataActualizada = { ...cliente, fechaActualizacion: new Date() }
-
-  /* Update del registro con el modelo Prisma */
-  const updated = await prisma.cliente.updateMany({
+  const clienteExistente = await prisma.cliente.findUnique({
     where: {
-      /* Donde 'id_cliente' de la tabla sea igual al 'id' parametro */
-      id_cliente: id,
-      /* Donde su estado de auditoria se '1' */
-      estado_auditoria: '1'
+      id_cliente: id
+    }
+  });
+
+  if (!clienteExistente || clienteExistente.estado_auditoria !== '1') {
+    return RESPONSE_NOT_FOUND;
+  }
+
+  await prisma.cliente.update({
+    where: {
+      id_cliente: id
     },
     data: toPrismaCliente(dataActualizada)
   });
 
-  /* Si la variable 'updated' que almacena el registro esta vacia 
-     devulve un NOT FOUNT */
-  if (updated.count === 0) {
-    return RESPONSE_NOT_FOUND;
-  }
-
   return RESPONSE_UPDATE_OK;
 }
 
-// export const modificarCliente = async (id: number, cliente: Cliente) => {
-  
-//   console.log("services/cliente.service.ts: modificarCliente");
-  
-//   const dataActualizada = { ...cliente, fechaActualizacion: new Date() }
-  
-//   const clienteExistente = await prisma.cliente.findUnique({
-//     where: {
-//       id_cliente: id
-//     }
-//   });
-
-//   if (!clienteExistente || clienteExistente.estado_auditoria !== '1') {
-//     return RESPONSE_NOT_FOUND;
-//   }
-
-//   await prisma.cliente.update({
-//     where: {
-//       id_cliente: id
-//     },
-//     data: toPrismaCliente(dataActualizada)
-//   });
-
-//   return RESPONSE_UPDATE_OK;
-// }
 
 export const eliminarCliente = async (id: number) => {
-
   console.log("services/cliente.service.ts: eliminarCliente");
-
   const cliente = await prisma.cliente.findUnique({
     where: {
-      id_cliente: id,
-      estado_auditoria: '1'
+      id_cliente: id
     }
   });
-
-  if (!cliente) {
+  if (!cliente || cliente.estado_auditoria !== '1') {
     return (RESPONSE_NOT_FOUND);
   }
 
@@ -136,4 +94,5 @@ export const eliminarCliente = async (id: number) => {
 
   return RESPONSE_DELETE_OK;
 };
+
 

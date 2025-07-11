@@ -5,7 +5,6 @@ import * as productoService from '../services/productoService';
 import { productoCrearSchema } from '../schemas/productoSchema';
 export const listarProductos = async (req: Request, res: Response) => {
     console.log("productosController:: listarProductos");
-
     try {
         const   response = await productoService.listarProductos();
         res.json(ResponseModel.success(response));
@@ -46,7 +45,6 @@ export const agregarProducto = async (req: Request, res: Response) :Promise<any>
 
 export const modificarProducto = async (req: Request, res: Response) :Promise<any>=> {
     console.log("productosController:: modificarProducto");
-
     try {
         const { id } = req.params;
         const response = await productoService.modificarProducto(Number(id), req.body);
@@ -59,7 +57,6 @@ export const modificarProducto = async (req: Request, res: Response) :Promise<an
 }
 export const eliminarProducto = async (req: Request, res: Response) :Promise<any>=> {
     console.log("productosController:: eliminarProducto");
-
     try {
         const { id } = req.params;
         const response = await productoService.eliminarProducto(Number(id));

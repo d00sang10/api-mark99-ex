@@ -138,7 +138,7 @@ route.get('/', authMiddleware, listarClientes);
  *         description: Cliente no encontrado
  */
 
-route.get('/:id', buscarClientePorId);
+route.get('/:id', authMiddleware,buscarClientePorId);
 
 /**
  * @swagger
@@ -173,7 +173,7 @@ route.get('/:id', buscarClientePorId);
  *               $ref: '#/components/schemas/Cliente'
  */
 
-route.post('/', agregarClientes);
+route.post('/', authMiddleware,agregarClientes);
 
 /**
  * @swagger
@@ -214,7 +214,7 @@ route.post('/', agregarClientes);
  *       404:
  *         description: Cliente no encontrado
  */
-route.put('/:id', modificarCliente);
+route.put('/:id', authMiddleware,modificarCliente);
 
 /**
  * @swagger
@@ -235,6 +235,6 @@ route.put('/:id', modificarCliente);
  *       404:
  *         description: Cliente no encontrado
  */
-route.delete('/:id', eliminarCliente);
+route.delete('/:id',authMiddleware, eliminarCliente);
 
 export default route;

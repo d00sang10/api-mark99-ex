@@ -6,9 +6,7 @@ import { fromPrismaProducto, toPrismaProducto } from "../mappers/producto.mapper
 const prisma = new PrismaClient();
 
 export const listarProductos = async () => {
-
     console.log("productoService:: listarProductos");
-
     const productos: producto[] = await prisma.producto.findMany({
         where: {
             estado_auditoria: '1'
@@ -17,60 +15,45 @@ export const listarProductos = async () => {
             id_producto: 'asc'
         }
     });
-
     return productos.map((productos: producto) => fromPrismaProducto(productos));
-
 }
 
 export const buscarProductoPorId = async (id: number) => {
-
     console.log("productoService:: buscarProductoPorId");
-
     const producto: producto | null = await prisma.producto.findUnique({
         where: {
-            id_producto: id,
-            estado_auditoria: '1'
+            id_producto: id
         }
     });
 
     if (!producto || producto.estado_auditoria !== '1') {
         return (RESPONSE_NOT_FOUND);
     }
-
     return producto ? fromPrismaProducto(producto) : null;
 }
 
 
 export const agregarProducto = async (producto: Producto) => {
-
     console.log("productoService:: agregarProducto");
-
     const proveedorExistente = await prisma.proveedor.findUnique({
         where: {
-            id_proveedor: producto.idProveedor,
-            estado_auditoria: '1'
+            id_proveedor: producto.idProveedor
         }
     });
-
-    if (!proveedorExistente) {
+    if (!proveedorExistente || proveedorExistente.estado_auditoria !=='1') {
         return RESPONSE_NOT_FOUND_PROVEE;
     }
-
     await prisma.producto.create({
         data: toPrismaProducto(producto)
     });
-
     return RESPONSE_INSERT_OK;
 }
 
 
 
 export const modificarProducto = async (id: number, producto: Producto) => {
-
     console.log("productoService:: modificarProducto");
-
     const dataActualizada = { ...producto, fechaActualizacion: new Date() }
-
     const productoExistente = await prisma.producto.findUnique({
         where: {
             id_producto: id
@@ -87,15 +70,12 @@ export const modificarProducto = async (id: number, producto: Producto) => {
         },
         data: toPrismaProducto(dataActualizada)
     });
-
     return RESPONSE_UPDATE_OK;
 }
 
 
 export const eliminarProducto = async (id: number) => {
-
     console.log("productoService:: eliminarProducto");
-
     const productoExistente = await prisma.producto.findUnique({
         where: {
             id_producto: id
@@ -111,9 +91,9 @@ export const eliminarProducto = async (id: number) => {
             id_producto: id
         },
         data: {
-            estado_auditoria: '0'
+            estado_auditoria: '0',
+            fecha_actualizacion: new Date()
         }
     });
-    
     return RESPONSE_DELETE_OK;
 }

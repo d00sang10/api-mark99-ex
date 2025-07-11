@@ -34,10 +34,13 @@ export const buscarProveedorPorId = async (id: number) => {
 
 
 export const agregarProveedor = async (proveedor: Proveedor) => {
+    
     console.log("proveedorService:: agregarProveedor");
+    
     await prisma.proveedor.create({
         data: toPrismaProveedor(proveedor)
     });
+    
     return RESPONSE_INSERT_OK;
 }
 

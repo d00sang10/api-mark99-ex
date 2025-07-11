@@ -26,12 +26,15 @@ export const loginAuth = async (username: string, password: string) => {
 };
 
 export const registerUser = async (username: string, password: string) => {
+
     const existing = await prisma.user.findUnique({ where: { username } });
+
     if (existing) {
         throw new Error('El usuario ya existe');
     }
 
     const hashedPassword = await bcrypt.hash(password, 10);
+    
     const user = await prisma.user.create({
         data: {
             username,

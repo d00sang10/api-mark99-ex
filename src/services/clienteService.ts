@@ -44,6 +44,14 @@ export const agregarClientes = async (cliente: Cliente) => {
 
   console.log("services/cliente.service.ts: agregarClientes");
 
+  const clienteExistente = await prisma.cliente.findUnique({
+    where: { email: cliente.email }
+  });
+
+  if (clienteExistente) {
+    throw new Error('El email ya está registrado');
+  }
+
   await prisma.cliente.create({
     data: toPrismaCliente(cliente)
   });

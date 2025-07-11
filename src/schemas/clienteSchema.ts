@@ -40,3 +40,43 @@ export const clienteCrearSchema = Joi.object({
       "string.pattern.base": "El campo 'teléfono' debe contener solo números (entre 7 y 15 dígitos)."
     })
 });
+
+
+export const clienteActualizarSchema = Joi.object({
+
+  nombre: Joi
+    .string()
+    .trim()
+    .min(3)
+    .max(20)
+    .messages({
+      "string.base": "El campo 'nombre' debe ser un texto.",
+      "string.empty": "El campo 'nombre' no puede estar vacío.",
+      "string.min": "En el campo 'nombre' al menos 3 caracteres",
+      "string.max": "El campo 'nombre' debe tener como máximo 20 caracteres."
+    }),
+
+  email: Joi
+    .string()
+    .trim()
+    .email()
+    .min(1)
+    .messages({
+      "string.base": "El campo 'email' debe ser un texto.",
+      "string.email": "El campo 'email' debe tener un formato válido.",
+      "string.min": "El campo 'email' no puede estar vacío o solo contener espacios."
+    }),
+
+  telefono: Joi
+    .string()
+    .trim()
+    .min(9)
+    .pattern(/^\d{7,15}$/)
+    .messages({
+      "string.base": "El campo 'teléfono' debe ser un texto.",
+      "string.empty": "El campo 'teléfono' no puede estar vacío.",
+      "string.min": "Al menos 9 números",
+      "string.pattern.base": "El campo 'teléfono' debe contener solo números (entre 7 y 15 dígitos)."
+    })
+
+}).min(1);

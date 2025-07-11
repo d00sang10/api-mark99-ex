@@ -30,6 +30,7 @@ app.use(`${config.API_PREFIX}/ventas`, ventaRoute);
 app.use(`${config.API_PREFIX}/detalles`, detalleVentaRoute);
 
 app.use(`${config.API_PREFIX}/auth`, authRouter);
+
 app.use(`${config.API_PREFIX}/api-docs`, swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
 export default app;

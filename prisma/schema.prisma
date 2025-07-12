@@ -94,7 +94,7 @@ model detalle_venta {
   producto producto @relation(fields: [id_producto], references: [id_producto], onDelete: Cascade, map: "fk_detalle_producto")
 }
 
-model User {
+model usuarios {
   id       Int    @id @default(autoincrement())
   username String @unique
   password String

@@ -5,7 +5,7 @@ import bcrypt from 'bcryptjs';
 const prisma = new PrismaClient();
 
 export const loginAuth = async (username: string, password: string) => {
-    const user = await prisma.user.findUnique({
+    const user = await prisma.usuarios.findUnique({
         where: { username },
     });
     if (!user) {
@@ -27,7 +27,7 @@ export const loginAuth = async (username: string, password: string) => {
 
 export const registerUser = async (username: string, password: string) => {
 
-    const existing = await prisma.user.findUnique({ where: { username } });
+    const existing = await prisma.usuarios.findUnique({ where: { username } });
 
     if (existing) {
         throw new Error('El usuario ya existe');
@@ -35,7 +35,7 @@ export const registerUser = async (username: string, password: string) => {
 
     const hashedPassword = await bcrypt.hash(password, 10);
     
-    const user = await prisma.user.create({
+    const user = await prisma.usuarios.create({
         data: {
             username,
             password: hashedPassword,
